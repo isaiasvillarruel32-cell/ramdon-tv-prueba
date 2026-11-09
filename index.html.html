@@ -704,7 +704,15 @@ function sortear() {
   }, 115);
 }
 
-/* PRUEBA: ABRIR NETFLIX EN EL MISMO NAVEGADOR */
+/* ================================
+   PRUEBA NUEVA DE NETFLIX
+
+   Antes: /watch/ID
+   Ahora: /title/ID
+
+   Solo cambiamos esto para probar
+   cómo responde Netflix en tu TV.
+   ================================ */
 
 function abrirNetflix() {
 
@@ -714,9 +722,7 @@ function abrirNetflix() {
     "https://www.netflix.com/title/" +
     elegidoActual.id;
 
-  /* En vez de abrir una nueva ventana,
-     navegamos directamente en el navegador actual */
-  window.location.href = url;
+  window.open(url, "_blank");
 }
 
 function activarSeleccion() {
