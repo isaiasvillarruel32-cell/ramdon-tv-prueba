@@ -144,8 +144,6 @@ h1 span {
   margin: 25px 0 36px;
 }
 
-/* BOTÓN RANDOM */
-
 .random-button {
   width: 245px;
   height: 245px;
@@ -202,8 +200,6 @@ h1 span {
   font-size: 12px;
   letter-spacing: .4px;
 }
-
-/* PANEL DERECHO */
 
 .right {
   width: 100%;
@@ -265,8 +261,6 @@ h1 span {
   font-size: 13px;
 }
 
-/* SEGUNDA OPCIÓN */
-
 .panel-content {
   margin: 50px 0;
   cursor: pointer;
@@ -321,8 +315,6 @@ h1 span {
   color: #858994;
 }
 
-/* BOTÓN NETFLIX DENTRO DEL PANEL */
-
 .netflix-action {
   display: none;
   margin-top: 25px;
@@ -347,8 +339,6 @@ h1 span {
   font-weight: 900;
 }
 
-/* EL PIE AHORA SOLO INFORMA */
-
 .panel-bottom {
   border-top: 1px solid var(--line);
   padding-top: 24px;
@@ -363,8 +353,6 @@ h1 span {
   text-align: right;
   line-height: 1.5;
 }
-
-/* FOCO PARA TV */
 
 .random-button.remote-selected {
   border-color: #fff;
@@ -395,8 +383,6 @@ h1 span {
   outline: none;
 }
 
-/* ANIMACIÓN */
-
 .spinning .dice {
   animation: roll .45s ease-in-out infinite;
 }
@@ -406,8 +392,6 @@ h1 span {
   50% { transform: rotate(180deg) scale(1.15); }
   100% { transform: rotate(360deg) scale(1); }
 }
-
-/* FOOTER */
 
 footer {
   border-top: 1px solid var(--line);
@@ -424,8 +408,6 @@ footer strong {
   color: #aeb1b9;
   font-weight: 700;
 }
-
-/* RESPONSIVE */
 
 @media (max-width: 900px) {
   .page {
@@ -493,7 +475,6 @@ footer strong {
     font-size: 8px;
   }
 }
-
 </style>
 </head>
 
@@ -545,7 +526,6 @@ footer strong {
         <div class="panel-number">R / TV</div>
       </div>
 
-      <!-- SEGUNDA OPCIÓN PRINCIPAL -->
       <div class="panel-content" id="segundaOpcion" tabindex="0">
 
         <div class="category" id="categoria">
@@ -588,10 +568,6 @@ footer strong {
 </div>
 
 <script>
-
-/* ================================
-   CATÁLOGO
-   ================================ */
 
 const catalogo = [
   {
@@ -643,13 +619,8 @@ const todos = catalogo.flatMap(grupo =>
   }))
 );
 
-/* ================================
-   ELEMENTOS
-   ================================ */
-
 const botonRandom = document.getElementById("randomBtn");
 const segundaOpcion = document.getElementById("segundaOpcion");
-
 const titulo = document.getElementById("titulo");
 const categoria = document.getElementById("categoria");
 const descripcion = document.getElementById("descripcion");
@@ -657,58 +628,30 @@ const netflixAction = document.getElementById("netflixAction");
 
 document.getElementById("contador").textContent = todos.length;
 
-/* ================================
-   ESTADO
-   ================================ */
-
 let ultimoElegido = null;
 let elegidoActual = null;
 let ocupado = false;
 let indiceSeleccionado = 0;
 
-/* ================================
-   FOCO
-   ================================ */
-
 function actualizarFoco() {
-
   botonRandom.classList.remove("remote-selected");
   segundaOpcion.classList.remove("remote-selected");
 
   if (indiceSeleccionado === 0) {
-
     botonRandom.classList.add("remote-selected");
-
-    try {
-      botonRandom.focus({ preventScroll: true });
-    } catch {
-      botonRandom.focus();
-    }
-
+    botonRandom.focus();
   } else {
-
     segundaOpcion.classList.add("remote-selected");
-
-    try {
-      segundaOpcion.focus({ preventScroll: true });
-    } catch {
-      segundaOpcion.focus();
-    }
+    segundaOpcion.focus();
   }
 }
 
 function cambiarSeleccion() {
-
   indiceSeleccionado = indiceSeleccionado === 0 ? 1 : 0;
   actualizarFoco();
 }
 
-/* ================================
-   RULETA
-   ================================ */
-
 function sortear() {
-
   if (ocupado) return;
 
   ocupado = true;
@@ -734,16 +677,12 @@ function sortear() {
 
     titulo.textContent = temporal.titulo;
     titulo.className = "result-title";
-
     categoria.textContent = temporal.genero;
-
-    descripcion.textContent =
-      "La ruleta está eligiendo...";
+    descripcion.textContent = "La ruleta está eligiendo...";
 
     vueltas++;
 
     if (vueltas >= totalVueltas) {
-
       clearInterval(animacion);
 
       elegidoActual = temporal;
@@ -751,21 +690,12 @@ function sortear() {
 
       categoria.textContent = temporal.genero;
       titulo.textContent = temporal.titulo;
-
       descripcion.textContent =
         "Tu próxima elección está lista. ¿La vemos?";
 
-      /* AHORA LA SEGUNDA OPCIÓN
-         SE CONVIERTE EN NETFLIX */
-
       netflixAction.classList.add("show");
-
       botonRandom.classList.remove("spinning");
-
       ocupado = false;
-
-      /* AL TERMINAR QUEDA ENFOCADA
-         LA OPCIÓN DE NETFLIX */
 
       indiceSeleccionado = 1;
       actualizarFoco();
@@ -775,7 +705,13 @@ function sortear() {
 }
 
 /* ================================
-   ABRIR NETFLIX
+   PRUEBA NUEVA DE NETFLIX
+
+   Antes: /watch/ID
+   Ahora: /title/ID
+
+   Solo cambiamos esto para probar
+   cómo responde Netflix en tu TV.
    ================================ */
 
 function abrirNetflix() {
@@ -783,45 +719,29 @@ function abrirNetflix() {
   if (!elegidoActual) return;
 
   const url =
-    "https://www.netflix.com/watch/" +
+    "https://www.netflix.com/title/" +
     elegidoActual.id;
 
   window.open(url, "_blank");
 }
 
-/* ================================
-   ACTIVAR LA OPCIÓN ACTUAL
-   ================================ */
-
 function activarSeleccion() {
 
   if (ocupado) return;
-
-  /* OPCIÓN 1: RANDOM */
 
   if (indiceSeleccionado === 0) {
     sortear();
     return;
   }
 
-  /* OPCIÓN 2:
-     SI HAY PELÍCULA → NETFLIX
-     SI NO HAY → RULETA */
-
   if (indiceSeleccionado === 1) {
-
     if (elegidoActual) {
       abrirNetflix();
     } else {
       sortear();
     }
-
   }
 }
-
-/* ================================
-   CONTROL REMOTO / TECLADO
-   ================================ */
 
 document.addEventListener("keydown", function(e) {
 
@@ -837,9 +757,6 @@ document.addEventListener("keydown", function(e) {
     e.key === "OK" ||
     e.key === "Select" ||
     e.key === " ";
-
-  /* CUALQUIER FLECHA CAMBIA
-     ENTRE LAS DOS OPCIONES */
 
   if (flechas.includes(e.key)) {
     e.preventDefault();
@@ -861,16 +778,10 @@ document.addEventListener("keydown", function(e) {
 
 });
 
-/* ================================
-   MOUSE
-   ================================ */
-
 botonRandom.addEventListener("click", function() {
-
   indiceSeleccionado = 0;
   actualizarFoco();
   sortear();
-
 });
 
 segundaOpcion.addEventListener("click", function() {
@@ -888,17 +799,11 @@ segundaOpcion.addEventListener("click", function() {
 
 });
 
-/* ================================
-   INICIO
-   ================================ */
-
 window.addEventListener("load", function() {
-
   setTimeout(() => {
     indiceSeleccionado = 0;
     actualizarFoco();
   }, 150);
-
 });
 
 </script>
