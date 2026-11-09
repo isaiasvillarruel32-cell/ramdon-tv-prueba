@@ -1,0 +1,908 @@
+[index.html.html](https://github.com/user-attachments/files/34586464/index.html.html)
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RANDOM TV</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg: #090a0d;
+  --white: #f6f6f7;
+  --muted: #858994;
+  --red: #e50914;
+  --line: rgba(255,255,255,.09);
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at 75% 48%, rgba(125,12,21,.16), transparent 42%),
+    radial-gradient(ellipse at 15% 5%, rgba(255,255,255,.035), transparent 30%),
+    var(--bg);
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  overflow-x: hidden;
+}
+
+.page {
+  min-height: 100vh;
+  width: 100%;
+  padding: 32px 5.5vw 28px;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 23px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.brand-mark {
+  width: 38px;
+  height: 38px;
+  background: var(--red);
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  box-shadow: 0 0 28px rgba(229,9,20,.22);
+}
+
+.brand-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.brand-name span {
+  color: var(--red);
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #48c98a;
+  box-shadow: 0 0 10px rgba(72,201,138,.7);
+}
+
+main {
+  flex: 1;
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 7vw;
+  padding: 55px 2vw 45px;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.eyebrow {
+  color: var(--red);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 4px;
+  margin-bottom: 23px;
+}
+
+h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(48px, 5.5vw, 88px);
+  line-height: .99;
+  letter-spacing: -4px;
+  margin: 0;
+  font-weight: 700;
+}
+
+h1 span {
+  color: var(--red);
+}
+
+.intro {
+  color: #a0a3ac;
+  font-size: clamp(15px, 1.2vw, 18px);
+  line-height: 1.7;
+  max-width: 450px;
+  margin: 25px 0 36px;
+}
+
+/* BOTÓN RANDOM */
+
+.random-button {
+  width: 245px;
+  height: 245px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.24);
+  background: radial-gradient(circle at 50% 35%, #292c33 0%, #17191e 53%, #101115 100%);
+  color: white;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  position: relative;
+  transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+  box-shadow: 0 18px 65px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.1);
+  outline: none;
+}
+
+.random-button::before {
+  content: "";
+  position: absolute;
+  inset: -11px;
+  border: 1px solid rgba(229,9,20,.32);
+  border-radius: 50%;
+  transition: .18s ease;
+}
+
+.random-button:active {
+  transform: scale(.97);
+}
+
+.dice {
+  font-size: 45px;
+  line-height: 1;
+}
+
+.button-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 3px;
+}
+
+.button-sub {
+  font-size: 10px;
+  color: #a5a8b0;
+  letter-spacing: 2px;
+}
+
+.hint {
+  margin-top: 31px;
+  color: #777b85;
+  font-size: 12px;
+  letter-spacing: .4px;
+}
+
+/* PANEL DERECHO */
+
+.right {
+  width: 100%;
+  max-width: 610px;
+  justify-self: end;
+}
+
+.result-panel {
+  min-height: 490px;
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 19px;
+  background: linear-gradient(145deg, rgba(255,255,255,.055), transparent 45%), #111318;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 38px;
+  box-shadow: 0 30px 90px rgba(0,0,0,.3);
+}
+
+.result-panel::before {
+  content: "";
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: rgba(229,9,20,.08);
+  filter: blur(90px);
+  right: -180px;
+  top: -170px;
+  pointer-events: none;
+}
+
+.panel-top,
+.panel-content,
+.panel-bottom {
+  position: relative;
+  z-index: 1;
+}
+
+.panel-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.panel-label {
+  font-size: 10px;
+  color: #858994;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+}
+
+.panel-number {
+  font-family: 'Space Grotesk', sans-serif;
+  color: #555963;
+  font-size: 13px;
+}
+
+/* SEGUNDA OPCIÓN */
+
+.panel-content {
+  margin: 50px 0;
+  cursor: pointer;
+  border-radius: 14px;
+  padding: 18px;
+  margin-left: -18px;
+  margin-right: -18px;
+  transition: transform .18s ease, background .18s ease, box-shadow .18s ease;
+  outline: none;
+}
+
+.category {
+  display: inline-block;
+  color: #ff555d;
+  border: 1px solid rgba(229,9,20,.4);
+  background: rgba(229,9,20,.09);
+  border-radius: 5px;
+  padding: 8px 12px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin-bottom: 24px;
+}
+
+.result-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(35px, 3.4vw, 55px);
+  line-height: 1.08;
+  letter-spacing: -2px;
+  font-weight: 700;
+  margin: 0;
+  max-width: 520px;
+  overflow-wrap: anywhere;
+}
+
+.result-description {
+  color: #969aa4;
+  font-size: 14px;
+  margin-top: 18px;
+  line-height: 1.6;
+}
+
+.placeholder {
+  color: #555963;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 34px;
+  line-height: 1.2;
+  max-width: 380px;
+}
+
+.placeholder span {
+  color: #858994;
+}
+
+/* BOTÓN NETFLIX DENTRO DEL PANEL */
+
+.netflix-action {
+  display: none;
+  margin-top: 25px;
+  align-items: center;
+  gap: 12px;
+  width: fit-content;
+  padding: 17px 24px;
+  background: var(--red);
+  color: white;
+  border-radius: 7px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.3px;
+}
+
+.netflix-action.show {
+  display: inline-flex;
+}
+
+.netflix-symbol {
+  font-size: 19px;
+  font-weight: 900;
+}
+
+/* EL PIE AHORA SOLO INFORMA */
+
+.panel-bottom {
+  border-top: 1px solid var(--line);
+  padding-top: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.panel-note {
+  color: #777b85;
+  font-size: 10px;
+  text-align: right;
+  line-height: 1.5;
+}
+
+/* FOCO PARA TV */
+
+.random-button.remote-selected {
+  border-color: #fff;
+  transform: scale(1.055);
+  box-shadow:
+    0 0 0 4px rgba(255,255,255,.92),
+    0 0 0 11px rgba(229,9,20,.7),
+    0 0 55px rgba(229,9,20,.35),
+    0 20px 65px rgba(0,0,0,.5);
+}
+
+.random-button.remote-selected::before {
+  inset: -19px;
+  border-color: #ff5961;
+}
+
+.panel-content.remote-selected {
+  background: rgba(229,9,20,.10);
+  transform: scale(1.025);
+  box-shadow:
+    0 0 0 3px #fff,
+    0 0 0 8px rgba(229,9,20,.55),
+    0 0 35px rgba(229,9,20,.28);
+}
+
+.random-button:focus,
+.panel-content:focus {
+  outline: none;
+}
+
+/* ANIMACIÓN */
+
+.spinning .dice {
+  animation: roll .45s ease-in-out infinite;
+}
+
+@keyframes roll {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(1.15); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+/* FOOTER */
+
+footer {
+  border-top: 1px solid var(--line);
+  padding-top: 19px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #646873;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+}
+
+footer strong {
+  color: #aeb1b9;
+  font-weight: 700;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+  .page {
+    padding: 22px 5vw;
+  }
+
+  main {
+    grid-template-columns: 1fr;
+    gap: 45px;
+    padding: 55px 0;
+  }
+
+  .left {
+    align-items: center;
+    text-align: center;
+  }
+
+  .intro {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .random-button {
+    width: 205px;
+    height: 205px;
+  }
+
+  .right {
+    justify-self: center;
+  }
+
+  .result-panel {
+    min-height: 390px;
+  }
+}
+
+@media (max-width: 520px) {
+  .page {
+    padding: 18px 20px;
+  }
+
+  .brand-name {
+    font-size: 17px;
+  }
+
+  .header-right {
+    font-size: 9px;
+  }
+
+  h1 {
+    font-size: 49px;
+    letter-spacing: -2.5px;
+  }
+
+  .result-panel {
+    padding: 25px;
+    min-height: 370px;
+  }
+
+  .result-title {
+    font-size: 37px;
+  }
+
+  footer {
+    font-size: 8px;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+<header>
+  <div class="brand">
+    <div class="brand-mark">R</div>
+    <div class="brand-name">RANDOM<span>TV</span></div>
+  </div>
+
+  <div class="header-right">
+    <span class="status-dot"></span>
+    TU CINE, SIN DECIDIR
+  </div>
+</header>
+
+<main>
+
+  <section class="left">
+
+    <div class="eyebrow">STREAMING SELECTOR / 001</div>
+
+    <h1>Menos elegir.<br><span>Más mirar.</span></h1>
+
+    <p class="intro">
+      Olvidate de pasar horas buscando qué ver.
+      Dejá que RANDOM TV elija por vos y empezá a disfrutar.
+    </p>
+
+    <button class="random-button" id="randomBtn" type="button">
+      <span class="dice">✳</span>
+      <span class="button-label">RANDOM</span>
+      <span class="button-sub">SORPRENDEME</span>
+    </button>
+
+    <div class="hint">USÁ LAS FLECHAS Y OK PARA NAVEGAR</div>
+
+  </section>
+
+  <section class="right">
+
+    <div class="result-panel">
+
+      <div class="panel-top">
+        <div class="panel-label">TU PRÓXIMA ELECCIÓN</div>
+        <div class="panel-number">R / TV</div>
+      </div>
+
+      <!-- SEGUNDA OPCIÓN PRINCIPAL -->
+      <div class="panel-content" id="segundaOpcion" tabindex="0">
+
+        <div class="category" id="categoria">
+          RULETA RANDOM
+        </div>
+
+        <h2 class="placeholder" id="titulo">
+          ¿Qué vamos a ver <span>hoy?</span>
+        </h2>
+
+        <p class="result-description" id="descripcion">
+          Seleccioná esta opción y dejá que la ruleta elija por vos.
+        </p>
+
+        <div class="netflix-action" id="netflixAction">
+          <span class="netflix-symbol">N</span>
+          REPRODUCIR EN NETFLIX
+        </div>
+
+      </div>
+
+      <div class="panel-bottom">
+        <div class="panel-note">
+          SELECCIÓN ALEATORIA<br>
+          CATÁLOGO DISPONIBLE
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+</main>
+
+<footer>
+  <div>RANDOM TV <strong>·</strong> EDICIÓN 001</div>
+  <div><strong id="contador">15</strong> TÍTULOS DISPONIBLES</div>
+</footer>
+
+</div>
+
+<script>
+
+/* ================================
+   CATÁLOGO
+   ================================ */
+
+const catalogo = [
+  {
+    genero: "COMEDIA",
+    titulos: [
+      { titulo: "Mamá se fue de viaje", id: "81729536" },
+      { titulo: "Permitidos", id: "81729538" },
+      { titulo: "Las hermanas fantásticas", id: "81610658" }
+    ]
+  },
+  {
+    genero: "DRAMA",
+    titulos: [
+      { titulo: "Crímenes de familia", id: "81227758" },
+      { titulo: "El cuaderno de Tomy", id: "81147160" }
+    ]
+  },
+  {
+    genero: "SUSPENSO",
+    titulos: [
+      { titulo: "Bird Box: A ciegas", id: "80196789" },
+      { titulo: "No te muevas", id: "81767564" },
+      { titulo: "Equipaje de mano", id: "81476963" },
+      { titulo: "Fractura", id: "80223997" },
+      { titulo: "Culpable", id: "81345983" }
+    ]
+  },
+  {
+    genero: "TERROR",
+    titulos: [
+      { titulo: "1922", id: "80135164" },
+      { titulo: "Elige o muere", id: "81488262" },
+      { titulo: "Creep", id: "70306646" }
+    ]
+  },
+  {
+    genero: "DOCUMENTALES",
+    titulos: [
+      { titulo: "ARA San Juan", id: "81708230" },
+      { titulo: "Carmel", id: "81017110" }
+    ]
+  }
+];
+
+const todos = catalogo.flatMap(grupo =>
+  grupo.titulos.map(item => ({
+    ...item,
+    genero: grupo.genero
+  }))
+);
+
+/* ================================
+   ELEMENTOS
+   ================================ */
+
+const botonRandom = document.getElementById("randomBtn");
+const segundaOpcion = document.getElementById("segundaOpcion");
+
+const titulo = document.getElementById("titulo");
+const categoria = document.getElementById("categoria");
+const descripcion = document.getElementById("descripcion");
+const netflixAction = document.getElementById("netflixAction");
+
+document.getElementById("contador").textContent = todos.length;
+
+/* ================================
+   ESTADO
+   ================================ */
+
+let ultimoElegido = null;
+let elegidoActual = null;
+let ocupado = false;
+let indiceSeleccionado = 0;
+
+/* ================================
+   FOCO
+   ================================ */
+
+function actualizarFoco() {
+
+  botonRandom.classList.remove("remote-selected");
+  segundaOpcion.classList.remove("remote-selected");
+
+  if (indiceSeleccionado === 0) {
+
+    botonRandom.classList.add("remote-selected");
+
+    try {
+      botonRandom.focus({ preventScroll: true });
+    } catch {
+      botonRandom.focus();
+    }
+
+  } else {
+
+    segundaOpcion.classList.add("remote-selected");
+
+    try {
+      segundaOpcion.focus({ preventScroll: true });
+    } catch {
+      segundaOpcion.focus();
+    }
+  }
+}
+
+function cambiarSeleccion() {
+
+  indiceSeleccionado = indiceSeleccionado === 0 ? 1 : 0;
+  actualizarFoco();
+}
+
+/* ================================
+   RULETA
+   ================================ */
+
+function sortear() {
+
+  if (ocupado) return;
+
+  ocupado = true;
+  elegidoActual = null;
+
+  botonRandom.classList.add("spinning");
+  netflixAction.classList.remove("show");
+
+  let vueltas = 0;
+  const totalVueltas = 14;
+  let temporal;
+
+  categoria.textContent = "RULETA EN MARCHA";
+
+  const animacion = setInterval(() => {
+
+    do {
+      temporal = todos[Math.floor(Math.random() * todos.length)];
+    } while (
+      temporal.titulo === ultimoElegido &&
+      todos.length > 1
+    );
+
+    titulo.textContent = temporal.titulo;
+    titulo.className = "result-title";
+
+    categoria.textContent = temporal.genero;
+
+    descripcion.textContent =
+      "La ruleta está eligiendo...";
+
+    vueltas++;
+
+    if (vueltas >= totalVueltas) {
+
+      clearInterval(animacion);
+
+      elegidoActual = temporal;
+      ultimoElegido = temporal.titulo;
+
+      categoria.textContent = temporal.genero;
+      titulo.textContent = temporal.titulo;
+
+      descripcion.textContent =
+        "Tu próxima elección está lista. ¿La vemos?";
+
+      /* AHORA LA SEGUNDA OPCIÓN
+         SE CONVIERTE EN NETFLIX */
+
+      netflixAction.classList.add("show");
+
+      botonRandom.classList.remove("spinning");
+
+      ocupado = false;
+
+      /* AL TERMINAR QUEDA ENFOCADA
+         LA OPCIÓN DE NETFLIX */
+
+      indiceSeleccionado = 1;
+      actualizarFoco();
+    }
+
+  }, 115);
+}
+
+/* ================================
+   ABRIR NETFLIX
+   ================================ */
+
+function abrirNetflix() {
+
+  if (!elegidoActual) return;
+
+  const url =
+    "https://www.netflix.com/watch/" +
+    elegidoActual.id;
+
+  window.open(url, "_blank");
+}
+
+/* ================================
+   ACTIVAR LA OPCIÓN ACTUAL
+   ================================ */
+
+function activarSeleccion() {
+
+  if (ocupado) return;
+
+  /* OPCIÓN 1: RANDOM */
+
+  if (indiceSeleccionado === 0) {
+    sortear();
+    return;
+  }
+
+  /* OPCIÓN 2:
+     SI HAY PELÍCULA → NETFLIX
+     SI NO HAY → RULETA */
+
+  if (indiceSeleccionado === 1) {
+
+    if (elegidoActual) {
+      abrirNetflix();
+    } else {
+      sortear();
+    }
+
+  }
+}
+
+/* ================================
+   CONTROL REMOTO / TECLADO
+   ================================ */
+
+document.addEventListener("keydown", function(e) {
+
+  const flechas = [
+    "ArrowUp",
+    "ArrowDown",
+    "ArrowLeft",
+    "ArrowRight"
+  ];
+
+  const esAceptar =
+    e.key === "Enter" ||
+    e.key === "OK" ||
+    e.key === "Select" ||
+    e.key === " ";
+
+  /* CUALQUIER FLECHA CAMBIA
+     ENTRE LAS DOS OPCIONES */
+
+  if (flechas.includes(e.key)) {
+    e.preventDefault();
+    cambiarSeleccion();
+    return;
+  }
+
+  if (esAceptar) {
+    e.preventDefault();
+    activarSeleccion();
+    return;
+  }
+
+  if (e.key === "Escape") {
+    e.preventDefault();
+    indiceSeleccionado = 0;
+    actualizarFoco();
+  }
+
+});
+
+/* ================================
+   MOUSE
+   ================================ */
+
+botonRandom.addEventListener("click", function() {
+
+  indiceSeleccionado = 0;
+  actualizarFoco();
+  sortear();
+
+});
+
+segundaOpcion.addEventListener("click", function() {
+
+  if (ocupado) return;
+
+  indiceSeleccionado = 1;
+  actualizarFoco();
+
+  if (elegidoActual) {
+    abrirNetflix();
+  } else {
+    sortear();
+  }
+
+});
+
+/* ================================
+   INICIO
+   ================================ */
+
+window.addEventListener("load", function() {
+
+  setTimeout(() => {
+    indiceSeleccionado = 0;
+    actualizarFoco();
+  }, 150);
+
+});
+
+</script>
+
+</body>
+</html>
