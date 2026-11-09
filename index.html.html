@@ -10,16 +10,18 @@
 
 :root {
   --bg: #090a0d;
-  --panel: #121419;
   --white: #f6f6f7;
   --muted: #858994;
   --red: #e50914;
   --line: rgba(255,255,255,.09);
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
 
-body {
+html, body {
   margin: 0;
   min-height: 100vh;
   background:
@@ -73,7 +75,9 @@ header {
   letter-spacing: 2px;
 }
 
-.brand-name span { color: var(--red); }
+.brand-name span {
+  color: var(--red);
+}
 
 .header-right {
   display: flex;
@@ -128,7 +132,9 @@ h1 {
   font-weight: 700;
 }
 
-h1 span { color: var(--red); }
+h1 span {
+  color: var(--red);
+}
 
 .intro {
   color: #a0a3ac;
@@ -137,6 +143,8 @@ h1 span { color: var(--red); }
   max-width: 450px;
   margin: 25px 0 36px;
 }
+
+/* BOTÓN RANDOM */
 
 .random-button {
   width: 245px;
@@ -152,7 +160,7 @@ h1 span { color: var(--red); }
   justify-content: center;
   gap: 9px;
   position: relative;
-  transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+  transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
   box-shadow: 0 18px 65px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.1);
   outline: none;
 }
@@ -163,23 +171,17 @@ h1 span { color: var(--red); }
   inset: -11px;
   border: 1px solid rgba(229,9,20,.32);
   border-radius: 50%;
-  transition: .25s;
+  transition: .18s ease;
 }
 
-.random-button:hover {
-  transform: scale(1.045);
-  border-color: var(--red);
-  box-shadow: 0 0 55px rgba(229,9,20,.18), 0 20px 65px rgba(0,0,0,.5);
+.random-button:active {
+  transform: scale(.97);
 }
 
-.random-button:hover::before {
-  inset: -17px;
-  border-color: rgba(229,9,20,.65);
+.dice {
+  font-size: 45px;
+  line-height: 1;
 }
-
-.random-button:active { transform: scale(.97); }
-
-.dice { font-size: 45px; line-height: 1; }
 
 .button-label {
   font-family: 'Space Grotesk', sans-serif;
@@ -200,6 +202,8 @@ h1 span { color: var(--red); }
   font-size: 12px;
   letter-spacing: .4px;
 }
+
+/* PANEL DERECHO */
 
 .right {
   width: 100%;
@@ -235,7 +239,9 @@ h1 span { color: var(--red); }
   pointer-events: none;
 }
 
-.panel-top, .panel-content, .panel-bottom {
+.panel-top,
+.panel-content,
+.panel-bottom {
   position: relative;
   z-index: 1;
 }
@@ -259,7 +265,18 @@ h1 span { color: var(--red); }
   font-size: 13px;
 }
 
-.panel-content { margin: 50px 0; }
+/* SEGUNDA OPCIÓN */
+
+.panel-content {
+  margin: 50px 0;
+  cursor: pointer;
+  border-radius: 14px;
+  padding: 18px;
+  margin-left: -18px;
+  margin-right: -18px;
+  transition: transform .18s ease, background .18s ease, box-shadow .18s ease;
+  outline: none;
+}
 
 .category {
   display: inline-block;
@@ -300,47 +317,45 @@ h1 span { color: var(--red); }
   max-width: 380px;
 }
 
-.placeholder span { color: #858994; }
+.placeholder span {
+  color: #858994;
+}
+
+/* BOTÓN NETFLIX DENTRO DEL PANEL */
+
+.netflix-action {
+  display: none;
+  margin-top: 25px;
+  align-items: center;
+  gap: 12px;
+  width: fit-content;
+  padding: 17px 24px;
+  background: var(--red);
+  color: white;
+  border-radius: 7px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.3px;
+}
+
+.netflix-action.show {
+  display: inline-flex;
+}
+
+.netflix-symbol {
+  font-size: 19px;
+  font-weight: 900;
+}
+
+/* EL PIE AHORA SOLO INFORMA */
 
 .panel-bottom {
   border-top: 1px solid var(--line);
   padding-top: 24px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 15px;
+  justify-content: flex-end;
 }
-
-.netflix-button {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-  padding: 17px 23px;
-  background: var(--red);
-  color: white;
-  text-decoration: none;
-  border-radius: 6px;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 1.3px;
-  transition: .2s;
-  border: none;
-  cursor: pointer;
-  outline: none;
-}
-
-.netflix-button:hover {
-  background: #ff1824;
-  box-shadow: 0 0 28px rgba(229,9,20,.28);
-}
-
-.netflix-button.disabled {
-  opacity: .35;
-  pointer-events: none;
-}
-
-.netflix-symbol { font-size: 19px; font-weight: 900; }
 
 .panel-note {
   color: #777b85;
@@ -348,6 +363,51 @@ h1 span { color: var(--red); }
   text-align: right;
   line-height: 1.5;
 }
+
+/* FOCO PARA TV */
+
+.random-button.remote-selected {
+  border-color: #fff;
+  transform: scale(1.055);
+  box-shadow:
+    0 0 0 4px rgba(255,255,255,.92),
+    0 0 0 11px rgba(229,9,20,.7),
+    0 0 55px rgba(229,9,20,.35),
+    0 20px 65px rgba(0,0,0,.5);
+}
+
+.random-button.remote-selected::before {
+  inset: -19px;
+  border-color: #ff5961;
+}
+
+.panel-content.remote-selected {
+  background: rgba(229,9,20,.10);
+  transform: scale(1.025);
+  box-shadow:
+    0 0 0 3px #fff,
+    0 0 0 8px rgba(229,9,20,.55),
+    0 0 35px rgba(229,9,20,.28);
+}
+
+.random-button:focus,
+.panel-content:focus {
+  outline: none;
+}
+
+/* ANIMACIÓN */
+
+.spinning .dice {
+  animation: roll .45s ease-in-out infinite;
+}
+
+@keyframes roll {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(1.15); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+/* FOOTER */
 
 footer {
   border-top: 1px solid var(--line);
@@ -360,61 +420,85 @@ footer {
   letter-spacing: 1.5px;
 }
 
-footer strong { color: #aeb1b9; font-weight: 700; }
-
-.spinning .dice { animation: roll .45s ease-in-out infinite; }
-
-@keyframes roll {
-  0% { transform: rotate(0deg) scale(1); }
-  50% { transform: rotate(180deg) scale(1.15); }
-  100% { transform: rotate(360deg) scale(1); }
+footer strong {
+  color: #aeb1b9;
+  font-weight: 700;
 }
 
-/* FOCO PARA CONTROL REMOTO Y TECLADO */
-.random-button:focus-visible,
-.netflix-button:focus-visible,
-.remote-selected {
-  outline: 3px solid #fff !important;
-  outline-offset: 9px;
-  box-shadow: 0 0 35px rgba(229,9,20,.4) !important;
-}
-
-@media (min-width: 1600px) {
-  .page { padding-left: 7vw; padding-right: 7vw; }
-  main { gap: 9vw; }
-  .random-button { width: 275px; height: 275px; }
-  .result-panel { min-height: 540px; padding: 46px; }
-}
+/* RESPONSIVE */
 
 @media (max-width: 900px) {
-  .page { padding: 22px 5vw; }
+  .page {
+    padding: 22px 5vw;
+  }
+
   main {
     grid-template-columns: 1fr;
     gap: 45px;
     padding: 55px 0;
   }
-  .left { align-items: center; text-align: center; }
-  .intro { margin-left: auto; margin-right: auto; }
-  .random-button { width: 205px; height: 205px; }
-  .right { justify-self: center; }
-  .result-panel { min-height: 390px; }
+
+  .left {
+    align-items: center;
+    text-align: center;
+  }
+
+  .intro {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .random-button {
+    width: 205px;
+    height: 205px;
+  }
+
+  .right {
+    justify-self: center;
+  }
+
+  .result-panel {
+    min-height: 390px;
+  }
 }
 
 @media (max-width: 520px) {
-  .page { padding: 18px 20px; }
-  .brand-name { font-size: 17px; }
-  .header-right { font-size: 9px; }
-  h1 { font-size: 49px; letter-spacing: -2.5px; }
-  .result-panel { padding: 25px; min-height: 370px; }
-  .result-title { font-size: 37px; }
-  .panel-bottom { align-items: flex-start; flex-direction: column; }
-  .panel-note { text-align: left; }
-  footer { font-size: 8px; }
+  .page {
+    padding: 18px 20px;
+  }
+
+  .brand-name {
+    font-size: 17px;
+  }
+
+  .header-right {
+    font-size: 9px;
+  }
+
+  h1 {
+    font-size: 49px;
+    letter-spacing: -2.5px;
+  }
+
+  .result-panel {
+    padding: 25px;
+    min-height: 370px;
+  }
+
+  .result-title {
+    font-size: 37px;
+  }
+
+  footer {
+    font-size: 8px;
+  }
 }
+
 </style>
 </head>
 
 <body>
+
 <div class="page">
 
 <header>
@@ -422,6 +506,7 @@ footer strong { color: #aeb1b9; font-weight: 700; }
     <div class="brand-mark">R</div>
     <div class="brand-name">RANDOM<span>TV</span></div>
   </div>
+
   <div class="header-right">
     <span class="status-dot"></span>
     TU CINE, SIN DECIDIR
@@ -429,7 +514,9 @@ footer strong { color: #aeb1b9; font-weight: 700; }
 </header>
 
 <main>
+
   <section class="left">
+
     <div class="eyebrow">STREAMING SELECTOR / 001</div>
 
     <h1>Menos elegir.<br><span>Más mirar.</span></h1>
@@ -439,16 +526,18 @@ footer strong { color: #aeb1b9; font-weight: 700; }
       Dejá que RANDOM TV elija por vos y empezá a disfrutar.
     </p>
 
-    <button class="random-button" id="randomBtn" onclick="sortear()">
+    <button class="random-button" id="randomBtn" type="button">
       <span class="dice">✳</span>
       <span class="button-label">RANDOM</span>
       <span class="button-sub">SORPRENDEME</span>
     </button>
 
-    <div class="hint">UN CLIC. UNA ELECCIÓN. CERO VUELTAS.</div>
+    <div class="hint">USÁ LAS FLECHAS Y OK PARA NAVEGAR</div>
+
   </section>
 
   <section class="right">
+
     <div class="result-panel">
 
       <div class="panel-top">
@@ -456,23 +545,29 @@ footer strong { color: #aeb1b9; font-weight: 700; }
         <div class="panel-number">R / TV</div>
       </div>
 
-      <div class="panel-content">
-        <div class="category" id="categoria">ESPERANDO ELECCIÓN</div>
+      <!-- SEGUNDA OPCIÓN PRINCIPAL -->
+      <div class="panel-content" id="segundaOpcion" tabindex="0">
+
+        <div class="category" id="categoria">
+          RULETA RANDOM
+        </div>
+
         <h2 class="placeholder" id="titulo">
           ¿Qué vamos a ver <span>hoy?</span>
         </h2>
+
         <p class="result-description" id="descripcion">
-          Tocá RANDOM y encontrá algo para disfrutar.
+          Seleccioná esta opción y dejá que la ruleta elija por vos.
         </p>
+
+        <div class="netflix-action" id="netflixAction">
+          <span class="netflix-symbol">N</span>
+          REPRODUCIR EN NETFLIX
+        </div>
+
       </div>
 
       <div class="panel-bottom">
-        <a href="#" id="netflixBtn" class="netflix-button disabled"
-           target="_blank" rel="noopener" tabindex="-1">
-          <span class="netflix-symbol">N</span>
-          REPRODUCIR EN NETFLIX
-        </a>
-
         <div class="panel-note">
           SELECCIÓN ALEATORIA<br>
           CATÁLOGO DISPONIBLE
@@ -480,7 +575,9 @@ footer strong { color: #aeb1b9; font-weight: 700; }
       </div>
 
     </div>
+
   </section>
+
 </main>
 
 <footer>
@@ -491,6 +588,11 @@ footer strong { color: #aeb1b9; font-weight: 700; }
 </div>
 
 <script>
+
+/* ================================
+   CATÁLOGO
+   ================================ */
+
 const catalogo = [
   {
     genero: "COMEDIA",
@@ -541,138 +643,265 @@ const todos = catalogo.flatMap(grupo =>
   }))
 );
 
-let elegidoActual = null;
-let ultimoElegido = null;
-let ocupado = false;
+/* ================================
+   ELEMENTOS
+   ================================ */
 
 const botonRandom = document.getElementById("randomBtn");
-const botonNetflix = document.getElementById("netflixBtn");
+const segundaOpcion = document.getElementById("segundaOpcion");
+
+const titulo = document.getElementById("titulo");
+const categoria = document.getElementById("categoria");
+const descripcion = document.getElementById("descripcion");
+const netflixAction = document.getElementById("netflixAction");
 
 document.getElementById("contador").textContent = todos.length;
 
+/* ================================
+   ESTADO
+   ================================ */
+
+let ultimoElegido = null;
+let elegidoActual = null;
+let ocupado = false;
+let indiceSeleccionado = 0;
+
+/* ================================
+   FOCO
+   ================================ */
+
+function actualizarFoco() {
+
+  botonRandom.classList.remove("remote-selected");
+  segundaOpcion.classList.remove("remote-selected");
+
+  if (indiceSeleccionado === 0) {
+
+    botonRandom.classList.add("remote-selected");
+
+    try {
+      botonRandom.focus({ preventScroll: true });
+    } catch {
+      botonRandom.focus();
+    }
+
+  } else {
+
+    segundaOpcion.classList.add("remote-selected");
+
+    try {
+      segundaOpcion.focus({ preventScroll: true });
+    } catch {
+      segundaOpcion.focus();
+    }
+  }
+}
+
+function cambiarSeleccion() {
+
+  indiceSeleccionado = indiceSeleccionado === 0 ? 1 : 0;
+  actualizarFoco();
+}
+
+/* ================================
+   RULETA
+   ================================ */
+
 function sortear() {
+
   if (ocupado) return;
 
   ocupado = true;
-
-  const titulo = document.getElementById("titulo");
-  const categoria = document.getElementById("categoria");
-  const descripcion = document.getElementById("descripcion");
+  elegidoActual = null;
 
   botonRandom.classList.add("spinning");
-  botonNetflix.classList.add("disabled");
-  botonNetflix.removeAttribute("href");
-  botonNetflix.setAttribute("tabindex", "-1");
+  netflixAction.classList.remove("show");
 
   let vueltas = 0;
   const totalVueltas = 14;
   let temporal;
 
+  categoria.textContent = "RULETA EN MARCHA";
+
   const animacion = setInterval(() => {
+
     do {
       temporal = todos[Math.floor(Math.random() * todos.length)];
     } while (
-      temporal.titulo === ultimoElegido && todos.length > 1
+      temporal.titulo === ultimoElegido &&
+      todos.length > 1
     );
 
     titulo.textContent = temporal.titulo;
     titulo.className = "result-title";
+
     categoria.textContent = temporal.genero;
-    descripcion.textContent = "Buscando tu próxima película...";
+
+    descripcion.textContent =
+      "La ruleta está eligiendo...";
 
     vueltas++;
 
     if (vueltas >= totalVueltas) {
+
       clearInterval(animacion);
 
       elegidoActual = temporal;
       ultimoElegido = temporal.titulo;
 
-      categoria.textContent = elegidoActual.genero;
-      titulo.textContent = elegidoActual.titulo;
+      categoria.textContent = temporal.genero;
+      titulo.textContent = temporal.titulo;
+
       descripcion.textContent =
-        "Tu próxima elección está lista. Prepará algo rico y disfrutá.";
+        "Tu próxima elección está lista. ¿La vemos?";
 
-      botonNetflix.href =
-        "https://www.netflix.com/watch/" + elegidoActual.id;
+      /* AHORA LA SEGUNDA OPCIÓN
+         SE CONVIERTE EN NETFLIX */
 
-      botonNetflix.classList.remove("disabled");
-      botonNetflix.setAttribute("tabindex", "0");
+      netflixAction.classList.add("show");
 
       botonRandom.classList.remove("spinning");
+
       ocupado = false;
+
+      /* AL TERMINAR QUEDA ENFOCADA
+         LA OPCIÓN DE NETFLIX */
+
+      indiceSeleccionado = 1;
+      actualizarFoco();
     }
+
   }, 115);
 }
 
-/* NAVEGACIÓN CON FLECHAS Y ENTER */
-function enfocar(elemento) {
-  document.querySelectorAll(".remote-selected")
-    .forEach(el => el.classList.remove("remote-selected"));
+/* ================================
+   ABRIR NETFLIX
+   ================================ */
 
-  elemento.focus();
-  elemento.classList.add("remote-selected");
+function abrirNetflix() {
+
+  if (!elegidoActual) return;
+
+  const url =
+    "https://www.netflix.com/watch/" +
+    elegidoActual.id;
+
+  window.open(url, "_blank");
 }
 
+/* ================================
+   ACTIVAR LA OPCIÓN ACTUAL
+   ================================ */
+
+function activarSeleccion() {
+
+  if (ocupado) return;
+
+  /* OPCIÓN 1: RANDOM */
+
+  if (indiceSeleccionado === 0) {
+    sortear();
+    return;
+  }
+
+  /* OPCIÓN 2:
+     SI HAY PELÍCULA → NETFLIX
+     SI NO HAY → RULETA */
+
+  if (indiceSeleccionado === 1) {
+
+    if (elegidoActual) {
+      abrirNetflix();
+    } else {
+      sortear();
+    }
+
+  }
+}
+
+/* ================================
+   CONTROL REMOTO / TECLADO
+   ================================ */
+
 document.addEventListener("keydown", function(e) {
-  const activo = document.activeElement;
-  const estaEnRandom = activo === botonRandom;
-  const estaEnNetflix = activo === botonNetflix;
-  const sinSeleccion =
-    activo === document.body ||
-    activo === document.documentElement;
 
   const flechas = [
-    "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"
+    "ArrowUp",
+    "ArrowDown",
+    "ArrowLeft",
+    "ArrowRight"
   ];
 
-  if (sinSeleccion && flechas.includes(e.key)) {
+  const esAceptar =
+    e.key === "Enter" ||
+    e.key === "OK" ||
+    e.key === "Select" ||
+    e.key === " ";
+
+  /* CUALQUIER FLECHA CAMBIA
+     ENTRE LAS DOS OPCIONES */
+
+  if (flechas.includes(e.key)) {
     e.preventDefault();
-    enfocar(botonRandom);
+    cambiarSeleccion();
     return;
   }
 
-  if (sinSeleccion && e.key === "Enter") {
+  if (esAceptar) {
     e.preventDefault();
-    enfocar(botonRandom);
-    botonRandom.click();
-    return;
-  }
-
-  if (estaEnRandom &&
-      (e.key === "ArrowDown" || e.key === "ArrowRight")) {
-    e.preventDefault();
-
-    if (!botonNetflix.classList.contains("disabled")) {
-      enfocar(botonNetflix);
-    }
-    return;
-  }
-
-  if (estaEnNetflix &&
-      (e.key === "ArrowUp" || e.key === "ArrowLeft")) {
-    e.preventDefault();
-    enfocar(botonRandom);
+    activarSeleccion();
     return;
   }
 
   if (e.key === "Escape") {
     e.preventDefault();
-    enfocar(botonRandom);
+    indiceSeleccionado = 0;
+    actualizarFoco();
   }
+
 });
 
-/* EL MOUSE SIGUE FUNCIONANDO NORMALMENTE */
-document.addEventListener("mousedown", function() {
-  document.querySelectorAll(".remote-selected")
-    .forEach(el => el.classList.remove("remote-selected"));
-});
+/* ================================
+   MOUSE
+   ================================ */
 
-/* AL HACER CLIC, EL CONTROL REMOTO VUELVE A TENER FOCO */
 botonRandom.addEventListener("click", function() {
-  // El resultado conserva la navegación por teclado.
+
+  indiceSeleccionado = 0;
+  actualizarFoco();
+  sortear();
+
+});
+
+segundaOpcion.addEventListener("click", function() {
+
+  if (ocupado) return;
+
+  indiceSeleccionado = 1;
+  actualizarFoco();
+
+  if (elegidoActual) {
+    abrirNetflix();
+  } else {
+    sortear();
+  }
+
+});
+
+/* ================================
+   INICIO
+   ================================ */
+
+window.addEventListener("load", function() {
+
+  setTimeout(() => {
+    indiceSeleccionado = 0;
+    actualizarFoco();
+  }, 150);
+
 });
 
 </script>
+
 </body>
 </html>
