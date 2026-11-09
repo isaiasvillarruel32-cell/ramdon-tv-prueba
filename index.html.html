@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RANDOM TV</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg: #090a0d;
+  --panel: #121419;
+  --white: #f6f6f7;
+  --muted: #858994;
+  --red: #e50914;
+  --line: rgba(255,255,255,.09);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at 75% 48%, rgba(125,12,21,.16), transparent 42%),
+    radial-gradient(ellipse at 15% 5%, rgba(255,255,255,.035), transparent 30%),
+    var(--bg);
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  overflow-x: hidden;
+}
+
+.page {
+  min-height: 100vh;
+  width: 100%;
+  padding: 32px 5.5vw 28px;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 23px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.brand-mark {
+  width: 38px;
+  height: 38px;
+  background: var(--red);
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  box-shadow: 0 0 28px rgba(229,9,20,.22);
+}
+
+.brand-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.brand-name span { color: var(--red); }
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #48c98a;
+  box-shadow: 0 0 10px rgba(72,201,138,.7);
+}
+
+main {
+  flex: 1;
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 7vw;
+  padding: 55px 2vw 45px;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.eyebrow {
+  color: var(--red);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 4px;
+  margin-bottom: 23px;
+}
+
+h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(48px, 5.5vw, 88px);
+  line-height: .99;
+  letter-spacing: -4px;
+  margin: 0;
+  font-weight: 700;
+}
+
+h1 span { color: var(--red); }
+
+.intro {
+  color: #a0a3ac;
+  font-size: clamp(15px, 1.2vw, 18px);
+  line-height: 1.7;
+  max-width: 450px;
+  margin: 25px 0 36px;
+}
+
+.random-button {
+  width: 245px;
+  height: 245px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.24);
+  background: radial-gradient(circle at 50% 35%, #292c33 0%, #17191e 53%, #101115 100%);
+  color: white;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  position: relative;
+  transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+  box-shadow: 0 18px 65px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.1);
+  outline: none;
+}
+
+.random-button::before {
+  content: "";
+  position: absolute;
+  inset: -11px;
+  border: 1px solid rgba(229,9,20,.32);
+  border-radius: 50%;
+  transition: .25s;
+}
+
+.random-button:hover {
+  transform: scale(1.045);
+  border-color: var(--red);
+  box-shadow: 0 0 55px rgba(229,9,20,.18), 0 20px 65px rgba(0,0,0,.5);
+}
+
+.random-button:hover::before {
+  inset: -17px;
+  border-color: rgba(229,9,20,.65);
+}
+
+.random-button:active { transform: scale(.97); }
+
+.dice { font-size: 45px; line-height: 1; }
+
+.button-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 3px;
+}
+
+.button-sub {
+  font-size: 10px;
+  color: #a5a8b0;
+  letter-spacing: 2px;
+}
+
+.hint {
+  margin-top: 31px;
+  color: #777b85;
+  font-size: 12px;
+  letter-spacing: .4px;
+}
+
+.right {
+  width: 100%;
+  max-width: 610px;
+  justify-self: end;
+}
+
+.result-panel {
+  min-height: 490px;
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 19px;
+  background: linear-gradient(145deg, rgba(255,255,255,.055), transparent 45%), #111318;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 38px;
+  box-shadow: 0 30px 90px rgba(0,0,0,.3);
+}
+
+.result-panel::before {
+  content: "";
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: rgba(229,9,20,.08);
+  filter: blur(90px);
+  right: -180px;
+  top: -170px;
+  pointer-events: none;
+}
+
+.panel-top, .panel-content, .panel-bottom {
+  position: relative;
+  z-index: 1;
+}
+
+.panel-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.panel-label {
+  font-size: 10px;
+  color: #858994;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+}
+
+.panel-number {
+  font-family: 'Space Grotesk', sans-serif;
+  color: #555963;
+  font-size: 13px;
+}
+
+.panel-content { margin: 50px 0; }
+
+.category {
+  display: inline-block;
+  color: #ff555d;
+  border: 1px solid rgba(229,9,20,.4);
+  background: rgba(229,9,20,.09);
+  border-radius: 5px;
+  padding: 8px 12px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin-bottom: 24px;
+}
+
+.result-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(35px, 3.4vw, 55px);
+  line-height: 1.08;
+  letter-spacing: -2px;
+  font-weight: 700;
+  margin: 0;
+  max-width: 520px;
+  overflow-wrap: anywhere;
+}
+
+.result-description {
+  color: #969aa4;
+  font-size: 14px;
+  margin-top: 18px;
+  line-height: 1.6;
+}
+
+.placeholder {
+  color: #555963;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 34px;
+  line-height: 1.2;
+  max-width: 380px;
+}
+
+.placeholder span { color: #858994; }
+
+.panel-bottom {
+  border-top: 1px solid var(--line);
+  padding-top: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.netflix-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  padding: 17px 23px;
+  background: var(--red);
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.3px;
+  transition: .2s;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.netflix-button:hover {
+  background: #ff1824;
+  box-shadow: 0 0 28px rgba(229,9,20,.28);
+}
+
+.netflix-button.disabled {
+  opacity: .35;
+  pointer-events: none;
+}
+
+.netflix-symbol { font-size: 19px; font-weight: 900; }
+
+.panel-note {
+  color: #777b85;
+  font-size: 10px;
+  text-align: right;
+  line-height: 1.5;
+}
+
+footer {
+  border-top: 1px solid var(--line);
+  padding-top: 19px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #646873;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+}
+
+footer strong { color: #aeb1b9; font-weight: 700; }
+
+.spinning .dice { animation: roll .45s ease-in-out infinite; }
+
+@keyframes roll {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(1.15); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+/* FOCO PARA CONTROL REMOTO Y TECLADO */
+.random-button:focus-visible,
+.netflix-button:focus-visible,
+.remote-selected {
+  outline: 3px solid #fff !important;
+  outline-offset: 9px;
+  box-shadow: 0 0 35px rgba(229,9,20,.4) !important;
+}
+
+@media (min-width: 1600px) {
+  .page { padding-left: 7vw; padding-right: 7vw; }
+  main { gap: 9vw; }
+  .random-button { width: 275px; height: 275px; }
+  .result-panel { min-height: 540px; padding: 46px; }
+}
+
+@media (max-width: 900px) {
+  .page { padding: 22px 5vw; }
+  main {
+    grid-template-columns: 1fr;
+    gap: 45px;
+    padding: 55px 0;
+  }
+  .left { align-items: center; text-align: center; }
+  .intro { margin-left: auto; margin-right: auto; }
+  .random-button { width: 205px; height: 205px; }
+  .right { justify-self: center; }
+  .result-panel { min-height: 390px; }
+}
+
+@media (max-width: 520px) {
+  .page { padding: 18px 20px; }
+  .brand-name { font-size: 17px; }
+  .header-right { font-size: 9px; }
+  h1 { font-size: 49px; letter-spacing: -2.5px; }
+  .result-panel { padding: 25px; min-height: 370px; }
+  .result-title { font-size: 37px; }
+  .panel-bottom { align-items: flex-start; flex-direction: column; }
+  .panel-note { text-align: left; }
+  footer { font-size: 8px; }
+}
+</style>
+</head>
+
+<body>
+<div class="page">
+
+<header>
+  <div class="brand">
+    <div class="brand-mark">R</div>
+    <div class="brand-name">RANDOM<span>TV</span></div>
+  </div>
+  <div class="header-right">
+    <span class="status-dot"></span>
+    TU CINE, SIN DECIDIR
+  </div>
+</header>
+
+<main>
+  <section class="left">
+    <div class="eyebrow">STREAMING SELECTOR / 001</div>
+
+    <h1>Menos elegir.<br><span>Más mirar.</span></h1>
+
+    <p class="intro">
+      Olvidate de pasar horas buscando qué ver.
+      Dejá que RANDOM TV elija por vos y empezá a disfrutar.
+    </p>
+
+    <button class="random-button" id="randomBtn" onclick="sortear()">
+      <span class="dice">✳</span>
+      <span class="button-label">RANDOM</span>
+      <span class="button-sub">SORPRENDEME</span>
+    </button>
+
+    <div class="hint">UN CLIC. UNA ELECCIÓN. CERO VUELTAS.</div>
+  </section>
+
+  <section class="right">
+    <div class="result-panel">
+
+      <div class="panel-top">
+        <div class="panel-label">TU PRÓXIMA ELECCIÓN</div>
+        <div class="panel-number">R / TV</div>
+      </div>
+
+      <div class="panel-content">
+        <div class="category" id="categoria">ESPERANDO ELECCIÓN</div>
+        <h2 class="placeholder" id="titulo">
+          ¿Qué vamos a ver <span>hoy?</span>
+        </h2>
+        <p class="result-description" id="descripcion">
+          Tocá RANDOM y encontrá algo para disfrutar.
+        </p>
+      </div>
+
+      <div class="panel-bottom">
+        <a href="#" id="netflixBtn" class="netflix-button disabled"
+           target="_blank" rel="noopener" tabindex="-1">
+          <span class="netflix-symbol">N</span>
+          REPRODUCIR EN NETFLIX
+        </a>
+
+        <div class="panel-note">
+          SELECCIÓN ALEATORIA<br>
+          CATÁLOGO DISPONIBLE
+        </div>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div>RANDOM TV <strong>·</strong> EDICIÓN 001</div>
+  <div><strong id="contador">15</strong> TÍTULOS DISPONIBLES</div>
+</footer>
+
+</div>
+
+<script>
+const catalogo = [
+  {
+    genero: "COMEDIA",
+    titulos: [
+      { titulo: "Mamá se fue de viaje", id: "81729536" },
+      { titulo: "Permitidos", id: "81729538" },
+      { titulo: "Las hermanas fantásticas", id: "81610658" }
+    ]
+  },
+  {
+    genero: "DRAMA",
+    titulos: [
+      { titulo: "Crímenes de familia", id: "81227758" },
+      { titulo: "El cuaderno de Tomy", id: "81147160" }
+    ]
+  },
+  {
+    genero: "SUSPENSO",
+    titulos: [
+      { titulo: "Bird Box: A ciegas", id: "80196789" },
+      { titulo: "No te muevas", id: "81767564" },
+      { titulo: "Equipaje de mano", id: "81476963" },
+      { titulo: "Fractura", id: "80223997" },
+      { titulo: "Culpable", id: "81345983" }
+    ]
+  },
+  {
+    genero: "TERROR",
+    titulos: [
+      { titulo: "1922", id: "80135164" },
+      { titulo: "Elige o muere", id: "81488262" },
+      { titulo: "Creep", id: "70306646" }
+    ]
+  },
+  {
+    genero: "DOCUMENTALES",
+    titulos: [
+      { titulo: "ARA San Juan", id: "81708230" },
+      { titulo: "Carmel", id: "81017110" }
+    ]
+  }
+];
+
+const todos = catalogo.flatMap(grupo =>
+  grupo.titulos.map(item => ({
+    ...item,
+    genero: grupo.genero
+  }))
+);
+
+let elegidoActual = null;
+let ultimoElegido = null;
+let ocupado = false;
+
+const botonRandom = document.getElementById("randomBtn");
+const botonNetflix = document.getElementById("netflixBtn");
+
+document.getElementById("contador").textContent = todos.length;
+
+function sortear() {
+  if (ocupado) return;
+
+  ocupado = true;
+
+  const titulo = document.getElementById("titulo");
+  const categoria = document.getElementById("categoria");
+  const descripcion = document.getElementById("descripcion");
+
+  botonRandom.classList.add("spinning");
+  botonNetflix.classList.add("disabled");
+  botonNetflix.removeAttribute("href");
+  botonNetflix.setAttribute("tabindex", "-1");
+
+  let vueltas = 0;
+  const totalVueltas = 14;
+  let temporal;
+
+  const animacion = setInterval(() => {
+    do {
+      temporal = todos[Math.floor(Math.random() * todos.length)];
+    } while (
+      temporal.titulo === ultimoElegido && todos.length > 1
+    );
+
+    titulo.textContent = temporal.titulo;
+    titulo.className = "result-title";
+    categoria.textContent = temporal.genero;
+    descripcion.textContent = "Buscando tu próxima película...";
+
+    vueltas++;
+
+    if (vueltas >= totalVueltas) {
+      clearInterval(animacion);
+
+      elegidoActual = temporal;
+      ultimoElegido = temporal.titulo;
+
+      categoria.textContent = elegidoActual.genero;
+      titulo.textContent = elegidoActual.titulo;
+      descripcion.textContent =
+        "Tu próxima elección está lista. Prepará algo rico y disfrutá.";
+
+      botonNetflix.href =
+        "https://www.netflix.com/watch/" + elegidoActual.id;
+
+      botonNetflix.classList.remove("disabled");
+      botonNetflix.setAttribute("tabindex", "0");
+
+      botonRandom.classList.remove("spinning");
+      ocupado = false;
+    }
+  }, 115);
+}
+
+/* NAVEGACIÓN CON FLECHAS Y ENTER */
+function enfocar(elemento) {
+  document.querySelectorAll(".remote-selected")
+    .forEach(el => el.classList.remove("remote-selected"));
+
+  elemento.focus();
+  elemento.classList.add("remote-selected");
+}
+
+document.addEventListener("keydown", function(e) {
+  const activo = document.activeElement;
+  const estaEnRandom = activo === botonRandom;
+  const estaEnNetflix = activo === botonNetflix;
+  const sinSeleccion =
+    activo === document.body ||
+    activo === document.documentElement;
+
+  const flechas = [
+    "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"
+  ];
+
+  if (sinSeleccion && flechas.includes(e.key)) {
+    e.preventDefault();
+    enfocar(botonRandom);
+    return;
+  }
+
+  if (sinSeleccion && e.key === "Enter") {
+    e.preventDefault();
+    enfocar(botonRandom);
+    botonRandom.click();
+    return;
+  }
+
+  if (estaEnRandom &&
+      (e.key === "ArrowDown" || e.key === "ArrowRight")) {
+    e.preventDefault();
+
+    if (!botonNetflix.classList.contains("disabled")) {
+      enfocar(botonNetflix);
+    }
+    return;
+  }
+
+  if (estaEnNetflix &&
+      (e.key === "ArrowUp" || e.key === "ArrowLeft")) {
+    e.preventDefault();
+    enfocar(botonRandom);
+    return;
+  }
+
+  if (e.key === "Escape") {
+    e.preventDefault();
+    enfocar(botonRandom);
+  }
+});
+
+/* EL MOUSE SIGUE FUNCIONANDO NORMALMENTE */
+document.addEventListener("mousedown", function() {
+  document.querySelectorAll(".remote-selected")
+    .forEach(el => el.classList.remove("remote-selected"));
+});
+
+/* AL HACER CLIC, EL CONTROL REMOTO VUELVE A TENER FOCO */
+botonRandom.addEventListener("click", function() {
+  // El resultado conserva la navegación por teclado.
+});
+
+</script>
+</body>
+</html>
